@@ -22,74 +22,74 @@
         }
     </style>
 </head>
-<body class="flex items-center justify-center min-h-screen text-gray-800 p-2 sm:p-4 md:p-8">
+<body class="flex items-center justify-center min-h-screen text-gray-800 p-2 sm:p-4 lg:p-8 bg-gray-200">
 
-    <div class="bg-white rounded-2xl shadow-xl w-full max-w-lg md:max-w-3xl overflow-hidden border border-gray-100 flex flex-col min-h-[500px] md:min-h-[700px]">
+    <div class="bg-white rounded-3xl shadow-2xl w-[95vw] h-[95vh] max-w-screen-2xl overflow-hidden flex flex-col">
         <!-- 標題區 -->
-        <div class="bg-blue-600 text-white p-5 md:p-8 text-center shrink-0">
-            <h1 id="gameTitle" class="text-2xl sm:text-3xl md:text-5xl font-extrabold tracking-wide mb-1 md:mb-3">搶 31 大戰</h1>
-            <p id="gameSubtitle" class="text-blue-200 text-xs sm:text-sm md:text-lg">每次可加 1~3，先搶到 31 的人獲勝！</p>
+        <div class="bg-blue-600 text-white p-4 sm:p-6 md:p-10 text-center shrink-0 flex flex-col justify-center">
+            <h1 id="gameTitle" class="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-wide mb-2">搶 31 大戰</h1>
+            <p id="gameSubtitle" class="text-blue-200 text-sm sm:text-base md:text-2xl font-medium">每次可加 1~3，先搶到 31 的人獲勝！</p>
         </div>
 
-        <div class="p-4 sm:p-6 flex-grow flex flex-col justify-center">
+        <div class="p-4 sm:p-6 md:p-10 flex-grow flex flex-col justify-center overflow-y-auto">
             
-            <div id="startMenu" class="flex flex-col items-center justify-center space-y-4 py-8">
-                <h2 class="text-xl font-bold text-gray-700 mb-2">請選擇遊戲模式</h2>
+            <div id="startMenu" class="flex flex-col items-center justify-center space-y-4 md:space-y-6 h-full">
+                <h2 class="text-2xl md:text-4xl font-bold text-gray-700 mb-4">請選擇遊戲模式</h2>
                 
                 <!-- 切換進階設定按鈕 -->
-                <button onclick="toggleAdvanced()" class="text-sm text-blue-500 hover:text-blue-700 font-medium flex items-center gap-1 transition-colors bg-blue-50 hover:bg-blue-100 py-1.5 px-4 rounded-full mb-1 active:scale-95">
+                <button onclick="toggleAdvanced()" class="text-sm md:text-xl text-blue-500 hover:text-blue-700 font-bold flex items-center gap-1 transition-colors bg-blue-50 hover:bg-blue-100 py-2 px-6 rounded-full mb-1 active:scale-95">
                     <span>⚙️</span> <span id="toggleAdvText">展開進階設定</span>
                 </button>
 
                 <!-- 進階設定區 (預設隱藏) -->
-                <div id="advancedSettings" class="hidden w-full max-w-xs md:max-w-sm bg-gray-50 p-4 rounded-xl border border-gray-200 mb-2 shadow-inner">
-                    <div class="flex justify-between items-center mb-3">
-                        <label class="text-sm md:text-base text-gray-600 font-medium">目標數字 (20~50)</label>
-                        <input type="number" id="targetInput" min="20" max="50" value="31" class="w-16 md:w-20 p-1.5 md:p-2 border border-gray-300 rounded-lg text-center font-bold text-gray-700 md:text-lg focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white shadow-sm">
+                <div id="advancedSettings" class="hidden w-full max-w-md md:max-w-xl bg-gray-50 p-6 rounded-2xl border-2 border-gray-200 mb-4 shadow-inner">
+                    <div class="flex justify-between items-center mb-4 md:mb-6">
+                        <label class="text-base md:text-2xl text-gray-600 font-bold">目標數字 (20~50)</label>
+                        <input type="number" id="targetInput" min="20" max="50" value="31" class="w-20 md:w-32 p-2 md:p-4 border-2 border-gray-300 rounded-xl text-center font-black text-gray-700 text-xl md:text-3xl focus:outline-none focus:border-blue-500 bg-white shadow-sm">
                     </div>
                     <div class="flex justify-between items-center">
-                        <label class="text-sm md:text-base text-gray-600 font-medium">單次最多喊 (1~5)</label>
-                        <input type="number" id="stepInput" min="1" max="5" value="3" class="w-16 md:w-20 p-1.5 md:p-2 border border-gray-300 rounded-lg text-center font-bold text-gray-700 md:text-lg focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white shadow-sm">
+                        <label class="text-base md:text-2xl text-gray-600 font-bold">單次最多喊 (1~5)</label>
+                        <input type="number" id="stepInput" min="1" max="5" value="3" class="w-20 md:w-32 p-2 md:p-4 border-2 border-gray-300 rounded-xl text-center font-black text-gray-700 text-xl md:text-3xl focus:outline-none focus:border-blue-500 bg-white shadow-sm">
                     </div>
                 </div>
 
-                <button onclick="startGame('ai')" class="w-full max-w-xs md:max-w-sm bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 md:py-6 px-6 rounded-xl transition duration-200 shadow-md text-lg md:text-xl active:scale-95 flex items-center justify-center gap-2">
-                    <span>👤</span> 單人挑戰 (對戰 AI)
+                <button onclick="startGame('ai')" class="w-full max-w-sm md:max-w-md lg:max-w-lg bg-blue-500 hover:bg-blue-600 text-white font-black py-4 md:py-8 px-6 rounded-2xl transition duration-200 shadow-lg text-xl md:text-3xl active:scale-95 flex items-center justify-center gap-3">
+                    <span class="text-2xl md:text-4xl">👤</span> 單人挑戰 (對戰 AI)
                 </button>
-                <button onclick="startGame('pvp')" class="w-full max-w-xs md:max-w-sm bg-red-500 hover:bg-red-600 text-white font-bold py-4 md:py-6 px-6 rounded-xl transition duration-200 shadow-md text-lg md:text-xl active:scale-95 flex items-center justify-center gap-2">
-                    <span>👥</span> 雙人對戰 (玩家 vs 玩家)
+                <button onclick="startGame('pvp')" class="w-full max-w-sm md:max-w-md lg:max-w-lg bg-red-500 hover:bg-red-600 text-white font-black py-4 md:py-8 px-6 rounded-2xl transition duration-200 shadow-lg text-xl md:text-3xl active:scale-95 flex items-center justify-center gap-3">
+                    <span class="text-2xl md:text-4xl">👥</span> 雙人對戰 (玩家 vs 玩家)
                 </button>
             </div>
 
-            <div id="gameBoard" class="hidden flex-col h-full w-full">
+            <div id="gameBoard" class="hidden flex-col h-full w-full max-w-5xl mx-auto">
                 <!-- 可視化進度區 -->
-                <div class="mb-6 md:mb-8">
-                    <div class="flex justify-between items-end mb-2 md:mb-4">
-                        <p class="text-gray-500 font-medium text-sm md:text-lg">目前累積進度</p>
-                        <div class="text-4xl md:text-6xl font-extrabold text-gray-800 transition-all duration-300" id="currentNumber">0</div>
+                <div class="mb-4 md:mb-8 flex-grow flex flex-col min-h-0">
+                    <div class="flex justify-between items-end mb-2 md:mb-6 shrink-0">
+                        <p class="text-gray-500 font-bold text-base md:text-2xl">目前累積進度</p>
+                        <div class="text-5xl md:text-8xl lg:text-[120px] leading-none font-black text-gray-800 transition-all duration-300 drop-shadow-md" id="currentNumber">0</div>
                     </div>
-                    <!-- 數字圓圈軌道 -->
-                    <div id="circleTrack" class="flex flex-wrap justify-start gap-1.5 sm:gap-2 md:gap-3 bg-gray-50 p-4 md:p-6 rounded-xl border border-gray-200 shadow-inner">
+                    <!-- 數字圓圈軌道 (自動填充網格) -->
+                    <div id="circleTrack" class="grid grid-cols-[repeat(auto-fit,minmax(40px,1fr))] md:grid-cols-[repeat(auto-fit,minmax(60px,1fr))] lg:grid-cols-[repeat(auto-fit,minmax(80px,1fr))] gap-2 md:gap-4 bg-gray-50 p-4 md:p-8 rounded-2xl border-2 border-gray-200 shadow-inner overflow-y-auto flex-grow content-start">
                         <!-- 圓圈由 JS 動態生成 -->
                     </div>
                 </div>
 
                 <!-- 遊戲訊息 -->
-                <div id="gameStatus" class="text-center font-bold text-lg md:text-2xl mb-4 h-6 md:h-8 shrink-0 transition-colors duration-300">
+                <div id="gameStatus" class="text-center font-black text-xl md:text-4xl mb-4 md:mb-8 shrink-0 transition-colors duration-300">
                     <!-- 狀態由 JS 動態更新 -->
                 </div>
 
                 <!-- 玩家操作區 -->
-                <div id="playerControls" class="grid gap-2 sm:gap-3 md:gap-4 mb-6 md:mb-8 shrink-0">
+                <div id="playerControls" class="grid gap-3 md:gap-6 shrink-0">
                     <!-- 按鈕將由 JS 動態生成 -->
                 </div>
 
                 <!-- 重新開始 / 回主選單按鈕 -->
-                <div id="restartContainer" class="mt-auto hidden flex gap-3 md:gap-6 shrink-0">
-                    <button onclick="backToMenu()" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-3 md:py-5 px-4 rounded-xl transition duration-200 shadow-sm active:scale-95 md:text-xl">
+                <div id="restartContainer" class="mt-4 md:mt-8 hidden flex gap-4 md:gap-8 shrink-0">
+                    <button onclick="backToMenu()" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-black py-4 md:py-8 rounded-2xl transition duration-200 shadow-md active:scale-95 text-lg md:text-3xl">
                         回主選單
                     </button>
-                    <button onclick="resetGame()" class="flex-1 bg-green-500 hover:bg-green-600 text-white font-bold py-3 md:py-5 px-4 rounded-xl transition duration-200 shadow-md active:scale-95 md:text-xl">
+                    <button onclick="resetGame()" class="flex-1 bg-green-500 hover:bg-green-600 text-white font-black py-4 md:py-8 rounded-2xl transition duration-200 shadow-lg active:scale-95 text-lg md:text-3xl">
                         再來一局
                     </button>
                 </div>
@@ -142,22 +142,22 @@
             if (maxStep > 5) maxStep = 5;
 
             // 更新 UI 標題
-            document.getElementById('gameTitle').innerText = `搶 ${targetNumber} 大戰`;
-            document.getElementById('gameSubtitle').innerText = `每次可加 1~${maxStep}，先搶到 ${targetNumber} 的人獲勝！`;
+        document.getElementById('gameTitle').innerText = `搶 ${targetNumber} 大戰`;
+        document.getElementById('gameSubtitle').innerText = `每次可加 1~${maxStep}，先搶到 ${targetNumber} 的人獲勝！`;
 
-            // 動態生成操作按鈕
-            playerControls.innerHTML = '';
-            playerControls.style.gridTemplateColumns = `repeat(${maxStep}, minmax(0, 1fr))`;
-            for (let i = 1; i <= maxStep; i++) {
-                const btn = document.createElement('button');
-                btn.innerText = `+ ${i}`;
-                btn.className = 'action-btn bg-gray-50 hover:bg-gray-100 text-gray-800 border border-gray-300 font-bold py-3 md:py-6 px-2 sm:px-4 rounded-xl transition duration-200 shadow-sm sm:text-lg md:text-3xl active:scale-95';
-                btn.onclick = () => playerMove(i);
-                playerControls.appendChild(btn);
-            }
-            actionButtons = document.querySelectorAll('.action-btn');
+        // 動態生成操作按鈕
+        playerControls.innerHTML = '';
+        playerControls.style.gridTemplateColumns = `repeat(${maxStep}, minmax(0, 1fr))`;
+        for (let i = 1; i <= maxStep; i++) {
+            const btn = document.createElement('button');
+            btn.innerText = `+ ${i}`;
+            btn.className = 'action-btn bg-gray-50 hover:bg-gray-100 text-gray-800 border-2 border-gray-300 font-black py-4 md:py-8 lg:py-12 px-2 rounded-2xl transition duration-200 shadow-md text-2xl md:text-5xl lg:text-6xl active:scale-95';
+            btn.onclick = () => playerMove(i);
+            playerControls.appendChild(btn);
+        }
+        actionButtons = document.querySelectorAll('.action-btn');
 
-            startMenu.classList.add('hidden');
+        startMenu.classList.add('hidden');
             gameBoard.classList.remove('hidden');
             gameBoard.classList.add('flex');
             resetGame();
@@ -176,11 +176,11 @@
             for(let i = 1; i <= targetNumber; i++) {
                 const circle = document.createElement('div');
                 circle.id = `circle-${i}`;
-                circle.className = 'w-7 h-7 sm:w-8 sm:h-8 md:w-12 md:h-12 rounded-full flex items-center justify-center text-xs md:text-lg font-bold bg-gray-200 text-gray-500 border border-gray-300 transition-colors duration-300';
+                circle.className = 'w-full aspect-square rounded-full flex items-center justify-center text-sm md:text-2xl lg:text-3xl font-black bg-gray-200 text-gray-500 border-2 md:border-4 border-gray-300 transition-all duration-300 shadow-sm';
                 
                 if (i === targetNumber) {
                     circle.classList.remove('bg-gray-200', 'text-gray-500', 'border-gray-300');
-                    circle.classList.add('bg-yellow-100', 'text-yellow-700', 'border-2', 'border-yellow-400', 'ring-2', 'ring-yellow-200');
+                    circle.classList.add('bg-yellow-100', 'text-yellow-700', 'border-yellow-400', 'ring-4', 'ring-yellow-200');
                     circle.innerHTML = '👑';
                 } else {
                     circle.innerText = i;
@@ -226,7 +226,7 @@
                 btn.disabled = disabled;
                 
                 // 重置按鈕顏色
-                btn.className = 'action-btn font-bold py-3 md:py-6 px-2 sm:px-4 rounded-xl transition duration-200 shadow-sm sm:text-lg md:text-3xl border';
+                btn.className = 'action-btn font-black py-4 md:py-8 lg:py-12 px-2 rounded-2xl transition duration-200 shadow-md text-2xl md:text-5xl lg:text-6xl border-2';
                 
                 if (disabled) {
                     btn.classList.add('bg-gray-100', 'text-gray-400', 'border-gray-200', 'cursor-not-allowed', 'opacity-60');
@@ -245,14 +245,14 @@
         function updateStatusText() {
             if (gameMode === 'ai') {
                 gameStatusEl.innerText = '👤 輪到你了！請選擇加多少。';
-                gameStatusEl.className = 'text-center font-bold text-lg md:text-2xl mb-4 h-6 md:h-8 shrink-0 text-blue-600';
+                gameStatusEl.className = 'text-center font-black text-xl md:text-4xl mb-4 md:mb-8 shrink-0 text-blue-600';
             } else {
                 if (currentPlayer === 1) {
                     gameStatusEl.innerText = '👤 玩家 1 的回合 (藍色)';
-                    gameStatusEl.className = 'text-center font-bold text-lg md:text-2xl mb-4 h-6 md:h-8 shrink-0 text-blue-600';
+                    gameStatusEl.className = 'text-center font-black text-xl md:text-4xl mb-4 md:mb-8 shrink-0 text-blue-600';
                 } else {
                     gameStatusEl.innerText = '👤 玩家 2 的回合 (紅色)';
-                    gameStatusEl.className = 'text-center font-bold text-lg md:text-2xl mb-4 h-6 md:h-8 shrink-0 text-red-600';
+                    gameStatusEl.className = 'text-center font-black text-xl md:text-4xl mb-4 md:mb-8 shrink-0 text-red-600';
                 }
             }
             // 確保按鈕顏色符合當前玩家
@@ -268,7 +268,7 @@
                 const originalClass = gameStatusEl.className;
                 
                 gameStatusEl.innerText = `⚠️ 注意：加了會超過 ${targetNumber}！`;
-                gameStatusEl.className = 'text-center font-bold text-lg md:text-2xl mb-4 h-6 md:h-8 shrink-0 text-yellow-600';
+                gameStatusEl.className = 'text-center font-black text-2xl md:text-5xl mb-4 md:mb-8 shrink-0 text-yellow-500';
                 
                 setTimeout(() => { 
                     if (!isGameOver) {
@@ -292,7 +292,7 @@
                 setButtonsState(true);
                 currentPlayer = 2; // AI 視為玩家2
                 gameStatusEl.innerText = '🤖 AI 思考中...';
-                gameStatusEl.className = 'text-center font-bold text-lg md:text-2xl mb-4 h-6 md:h-8 shrink-0 text-gray-500';
+                gameStatusEl.className = 'text-center font-black text-xl md:text-4xl mb-4 md:mb-8 shrink-0 text-gray-500';
                 setTimeout(aiMove, 600 + (amount * 200));
             } else {
                 currentPlayer = currentPlayer === 1 ? 2 : 1;
@@ -342,18 +342,18 @@
                 if (gameMode === 'ai') {
                     if (currentPlayer === 1) {
                         gameStatusEl.innerText = '🎉 恭喜！你贏了！';
-                        gameStatusEl.className = 'text-center font-extrabold text-xl md:text-3xl mb-4 h-6 md:h-8 shrink-0 text-blue-600';
+                        gameStatusEl.className = 'text-center font-black text-3xl md:text-6xl mb-4 md:mb-8 shrink-0 text-blue-600 drop-shadow-sm';
                     } else {
                         gameStatusEl.innerText = '💀 AI 贏了，你輸了！';
-                        gameStatusEl.className = 'text-center font-extrabold text-xl md:text-3xl mb-4 h-6 md:h-8 shrink-0 text-red-600';
+                        gameStatusEl.className = 'text-center font-black text-3xl md:text-6xl mb-4 md:mb-8 shrink-0 text-red-600 drop-shadow-sm';
                     }
                 } else {
                     if (currentPlayer === 1) {
                         gameStatusEl.innerText = '🎉 玩家 1 (藍色) 獲勝！';
-                        gameStatusEl.className = 'text-center font-extrabold text-xl md:text-3xl mb-4 h-6 md:h-8 shrink-0 text-blue-600';
+                        gameStatusEl.className = 'text-center font-black text-3xl md:text-6xl mb-4 md:mb-8 shrink-0 text-blue-600 drop-shadow-sm';
                     } else {
                         gameStatusEl.innerText = '🎉 玩家 2 (紅色) 獲勝！';
-                        gameStatusEl.className = 'text-center font-extrabold text-xl md:text-3xl mb-4 h-6 md:h-8 shrink-0 text-red-600';
+                        gameStatusEl.className = 'text-center font-black text-3xl md:text-6xl mb-4 md:mb-8 shrink-0 text-red-600 drop-shadow-sm';
                     }
                 }
                 
