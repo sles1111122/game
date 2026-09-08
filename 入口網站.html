@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GamePortal // 遊戲大廳</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        /* 載入圓潤可愛的字體 Nunito 與 Noto Sans TC */
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
+        
+        body {
+            font-family: 'Nunito', 'Noto Sans TC', sans-serif;
+            background-color: #f8fafc; /* 溫和的淺灰背景 */
+            color: #334155;
+            /* 活潑的波點背景裝飾 */
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        /* 隱藏捲軸但保留滾動功能 (美化) */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* 卡片進場動畫 */
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.9) translateY(10px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .game-item {
+            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-blue-200 selection:text-blue-900">
+
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-lg border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 flex items-center justify-center bg-gradient-to-br from-blue-400 to-purple-500 text-white rounded-2xl shadow-md font-black text-xl transform -rotate-6">
+                    G
+                </div>
+                <h1 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600 tracking-wide">
+                    GamePortal
+                </h1>
+            </div>
+            <nav class="hidden md:flex gap-8 font-bold text-slate-500">
+                <a href="#" class="text-blue-500 relative after:content-[''] after:absolute after:-bottom-2 after:left-1/2 after:-translate-x-1/2 after:w-1 after:h-1 after:bg-blue-500 after:rounded-full">首頁大廳</a>
+                <a href="#games" class="hover:text-blue-500 transition-colors">遊戲庫</a>
+                <a href="#" class="hover:text-blue-500 transition-colors">排行榜</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <section class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center flex flex-col items-center overflow-hidden">
+            <!-- 裝飾用背景光暈 -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-blue-100/50 blur-[80px] rounded-full pointer-events-none -z-10"></div>
+            
+            <span class="inline-block bg-blue-50 text-blue-600 px-4 py-1.5 rounded-full text-sm font-bold mb-6 border border-blue-100 shadow-sm">
+                ✨ 歡迎來到你的數位遊樂場
+            </span>
+            
+            <h2 class="text-4xl md:text-6xl font-black mb-6 text-slate-800 leading-tight">
+                探索無限的 <br class="md:hidden" />
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-500">歡樂時光</span>
+            </h2>
+            <p class="text-slate-500 max-w-2xl mb-12 text-lg">
+                選擇下方你喜歡的小遊戲，隨時隨地開啟一場輕鬆有趣的對戰。
+            </p>
+            
+            <!-- 圓潤的搜尋框 -->
+            <div class="w-full max-w-2xl bg-white p-2 flex items-center rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 focus-within:shadow-[0_8px_30px_rgb(59,130,246,0.1)] focus-within:border-blue-200 transition-all">
+                <div class="pl-5 text-xl text-slate-300">
+                    🔍
+                </div>
+                <input type="text" id="searchInput" placeholder="搜尋遊戲... (例如：搶 31)" class="w-full bg-transparent border-none outline-none text-slate-700 px-4 py-3 placeholder-slate-400 font-medium text-lg">
+                <select id="categoryFilter" class="hidden sm:block bg-slate-50 text-slate-600 rounded-full border border-slate-100 px-6 py-3 outline-none cursor-pointer hover:bg-slate-100 transition-colors font-bold appearance-none text-center">
+                    <option value="all">全部分類</option>
+                    <option value="math">益智邏輯</option>
+                    <option value="action">動作反應</option>
+                    <option value="puzzle">解謎過關</option>
+                </select>
+            </div>
+        </section>
+
+        <section id="games" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 pb-24">
+            <div class="flex items-center justify-between mb-10">
+                <h3 class="text-2xl font-black text-slate-800 flex items-center gap-2">
+                    🎮 所有遊戲
+                </h3>
+                <span id="gameCount" class="bg-slate-100 text-slate-500 px-3 py-1 rounded-full text-sm font-bold">共 6 款</span>
+            </div>
+
+            <div id="gameGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- 卡片 1：搶 31 大戰 (真實連結) -->
+                <article class="game-item bg-white rounded-[2rem] flex flex-col h-full border border-slate-100 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group">
+                    <div class="h-48 bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center relative overflow-hidden">
+                        <!-- 背景圓形裝飾 -->
+                        <div class="absolute -right-4 -top-4 w-24 h-24 bg-white/40 rounded-full blur-xl group-hover:scale-150 transition-transform duration-500"></div>
+                        <span class="text-7xl drop-shadow-sm group-hover:scale-110 transition-transform duration-300 z-10">🔢</span>
+                        <div class="absolute top-4 right-4 bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full text-xs font-black shadow-sm">
+                            HOT
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow relative">
+                        <div class="flex gap-2 mb-4">
+                            <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-bold">益智邏輯</span>
+                            <span class="bg-slate-100 text-slate-600 px-3 py-1 rounded-full text-xs font-bold">單人 / 雙人</span>
+                        </div>
+                        <h4 class="text-2xl font-black mb-2 text-slate-800">搶 31 大戰</h4>
+                        <p class="text-slate-500 text-sm mb-6 flex-grow leading-relaxed">
+                            經典的巴什博弈遊戲！看誰能精準算計，一步步逼迫對手，率先搶下勝利的數字 31。
+                        </p>
+                        <a href="catch31.html" class="block w-full text-center bg-blue-500 hover:bg-blue-600 text-white font-black rounded-2xl py-4 transition-all duration-300 shadow-md hover:shadow-lg hover:shadow-blue-200 active:scale-95 text-lg">
+                            開始遊戲 🎮
+                        </a>
+                    </div>
+                </article>
+
+                <!-- 卡片 2 -->
+                <article class="game-item bg-white rounded-[2rem] flex flex-col h-full border border-slate-100 overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300" data-title="貪吃蛇大冒險" data-category="action">
+                    <div class="h-48 bg-emerald-50 flex items-center justify-center relative">
+                        <span class="text-7xl drop-shadow-sm opacity-80">🐍</span>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <div class="flex gap-2 mb-4">
+                            <span class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold">動作反應</span>
+                        </div>
+                        <h4 class="text-2xl font-black mb-2 text-slate-800">貪吃蛇大冒險</h4>
+                        <p class="text-slate-500 text-sm mb-6 flex-grow leading-relaxed">
+                            吃掉蘋果讓自己變長！考驗你的反應與空間感，小心不要咬到自己的尾巴喔。
+                        </p>
+                        <button class="w-full bg-slate-100 text-slate-400 font-bold rounded-2xl py-4 cursor-not-allowed">
+                            尚未解鎖 🔒
+                        </button>
+                    </div>
+                </article>
+
+                <!-- 卡片 3 -->
+                <article class="game-item bg-white rounded-[2rem] flex flex-col h-full border border-slate-100 overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300" data-title="記憶翻牌" data-category="puzzle">
+                    <div class="h-48 bg-amber-50 flex items-center justify-center relative">
+                        <span class="text-7xl drop-shadow-sm opacity-80">🃏</span>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <div class="flex gap-2 mb-4">
+                            <span class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-xs font-bold">解謎過關</span>
+                        </div>
+                        <h4 class="text-2xl font-black mb-2 text-slate-800">記憶翻牌</h4>
+                        <p class="text-slate-500 text-sm mb-6 flex-grow leading-relaxed">
+                            翻開卡片尋找配對，考驗你瞬間記憶力的休閒小品。
+                        </p>
+                        <button class="w-full bg-slate-100 text-slate-400 font-bold rounded-2xl py-4 cursor-not-allowed">
+                            尚未解鎖 🔒
+                        </button>
+                    </div>
+                </article>
+
+                <!-- 卡片 4 -->
+                <article class="game-item bg-white rounded-[2rem] flex flex-col h-full border border-slate-100 overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300" data-title="星際打磚塊" data-category="action">
+                    <div class="h-48 bg-pink-50 flex items-center justify-center relative">
+                        <span class="text-7xl drop-shadow-sm opacity-80">🛸</span>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <div class="flex gap-2 mb-4">
+                            <span class="bg-pink-100 text-pink-700 px-3 py-1 rounded-full text-xs font-bold">動作反應</span>
+                        </div>
+                        <h4 class="text-2xl font-black mb-2 text-slate-800">星際打磚塊</h4>
+                        <p class="text-slate-500 text-sm mb-6 flex-grow leading-relaxed">
+                            操控太空船反彈能量球，擊碎所有障礙物，突破層層關卡！
+                        </p>
+                        <button class="w-full bg-slate-100 text-slate-400 font-bold rounded-2xl py-4 cursor-not-allowed">
+                            尚未解鎖 🔒
+                        </button>
+                    </div>
+                </article>
+
+                <!-- 卡片 5 -->
+                <article class="game-item bg-white rounded-[2rem] flex flex-col h-full border border-slate-100 overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300" data-title="圈圈叉叉進階版" data-category="math">
+                    <div class="h-48 bg-indigo-50 flex items-center justify-center relative">
+                        <span class="text-7xl drop-shadow-sm opacity-80">❌⭕</span>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <div class="flex gap-2 mb-4">
+                            <span class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-xs font-bold">益智邏輯</span>
+                        </div>
+                        <h4 class="text-2xl font-black mb-2 text-slate-800">圈圈叉叉進階版</h4>
+                        <p class="text-slate-500 text-sm mb-6 flex-grow leading-relaxed">
+                            不僅僅是 3x3，在更大的棋盤上連線得分，比經典玩法更具挑戰性。
+                        </p>
+                        <button class="w-full bg-slate-100 text-slate-400 font-bold rounded-2xl py-4 cursor-not-allowed">
+                            尚未解鎖 🔒
+                        </button>
+                    </div>
+                </article>
+
+                <!-- 卡片 6 -->
+                <article class="game-item bg-white rounded-[2rem] flex flex-col h-full border border-slate-100 overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300" data-title="終極密碼猜數字" data-category="puzzle">
+                    <div class="h-48 bg-rose-50 flex items-center justify-center relative">
+                        <span class="text-7xl drop-shadow-sm opacity-80">💣</span>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <div class="flex gap-2 mb-4">
+                            <span class="bg-rose-100 text-rose-700 px-3 py-1 rounded-full text-xs font-bold">解謎過關</span>
+                        </div>
+                        <h4 class="text-2xl font-black mb-2 text-slate-800">終極密碼猜數字</h4>
+                        <p class="text-slate-500 text-sm mb-6 flex-grow leading-relaxed">
+                            數字範圍不斷縮小，心跳加速！誰會是那個不幸踩中炸彈的倒霉鬼？
+                        </p>
+                        <button class="w-full bg-slate-100 text-slate-400 font-bold rounded-2xl py-4 cursor-not-allowed">
+                            尚未解鎖 🔒
+                        </button>
+                    </div>
+                </article>
+
+            </div>
+            
+            <div id="noResults" class="hidden text-center py-20 bg-white rounded-[2rem] border border-slate-100 shadow-sm mt-8">
+                <div class="text-5xl mb-4">🤔</div>
+                <h4 class="text-xl font-bold text-slate-800 mb-2">找不到相關遊戲</h4>
+                <p class="text-slate-500">換個關鍵字或分類試試看吧！</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-white border-t border-slate-200 py-8 text-center text-slate-400 font-medium mt-auto">
+        <p>© 2026 GamePortal. 享受你的遊戲時光。</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('searchInput');
+            const categoryFilter = document.getElementById('categoryFilter');
+            const gameItems = document.querySelectorAll('.game-item');
+            const gameCount = document.getElementById('gameCount');
+            const noResults = document.getElementById('noResults');
+
+            function filterGames() {
+                const searchTerm = searchInput.value.trim().toLowerCase();
+                const selectedCategory = categoryFilter.value;
+                let visibleCount = 0;
+
+                gameItems.forEach(item => {
+                    // 若有自訂屬性 data-title 則取用，否則從 h4 抓取
+                    const titleElement = item.querySelector('h4');
+                    const title = item.getAttribute('data-title') ? item.getAttribute('data-title').toLowerCase() : (titleElement ? titleElement.innerText.toLowerCase() : '');
+                    
+                    // 為了第一張卡片，手動設定它的 category
+                    let category = item.getAttribute('data-category');
+                    if (!category && title.includes('31')) {
+                        category = 'math'; // 預設第一張
+                    }
+                    
+                    const matchSearch = title.includes(searchTerm);
+                    const matchCategory = selectedCategory === 'all' || category === selectedCategory;
+
+                    if (matchSearch && matchCategory) {
+                        item.style.display = 'flex'; 
+                        // 重置動畫
+                        item.style.animation = 'none';
+                        item.offsetHeight; /* trigger reflow */
+                        item.style.animation = 'popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
+                        visibleCount++;
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+
+                gameCount.innerText = `共 ${visibleCount} 款`;
+                if (visibleCount === 0) {
+                    noResults.classList.remove('hidden');
+                } else {
+                    noResults.classList.add('hidden');
+                }
+            }
+
+            searchInput.addEventListener('input', filterGames);
+            categoryFilter.addEventListener('change', filterGames);
+        });
+    </script>
+</body>
+</html>
